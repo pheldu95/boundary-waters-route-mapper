@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function App() {
-  const [campsites, setCampsites] = useState([]);
+  const [campsites, setCampsites] = useState<Campsite[]>([]);
 
   useEffect(() => {
     fetch('https://localhost:5001/api/campsites')
