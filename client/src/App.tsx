@@ -5,7 +5,7 @@ function App() {
 
   useEffect(() => {
     fetch('https://localhost:5001/api/campsites')
-    .then(response => response.json)
+    .then(response => response.json())
     .then(data => setCampsites(data));
   }, [])
 
