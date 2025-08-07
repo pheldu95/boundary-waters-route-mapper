@@ -1,13 +1,13 @@
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 function App() {
   const [campsites, setCampsites] = useState<Campsite[]>([]);
 
   useEffect(() => {
-    fetch('https://localhost:5001/api/campsites')
-    .then(response => response.json())
-    .then(data => setCampsites(data));
+    axios.get<Campsite[]>('https://localhost:5001/api/campsites')
+    .then(response => setCampsites(response.data));
   }, [])
 
   return (
