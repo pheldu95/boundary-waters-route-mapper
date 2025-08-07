@@ -1,3 +1,4 @@
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -10,14 +11,16 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <h3>Route Mapper</h3>
-      <ul>
+    <>
+      <Typography variant='h3'>Route Mapper</Typography>
+      <List>
         {campsites.map((campsite) => (
-          <li key={campsite.id}>{campsite.description}</li>
+          <ListItem key={campsite.id}>
+            <ListItemText>{campsite.description}</ListItemText>
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </>
   )
 }
 
