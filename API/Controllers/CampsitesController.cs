@@ -25,4 +25,12 @@ public class CampsitesController() : BaseApiController
     {
         return await Mediator.Send(new CreateCampsite.Command { Campsite = campsite });
     }
+
+    [HttpPut]
+    public async Task<ActionResult> EditCampsite(Campsite campsite)
+    {
+        await Mediator.Send(new EditCampsite.Command { Campsite = campsite });
+        
+        return NoContent();
+    }
 }
