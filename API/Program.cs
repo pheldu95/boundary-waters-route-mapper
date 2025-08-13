@@ -1,4 +1,5 @@
 using Application.Campsites.Queries;
+using Application.Core;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -14,6 +15,7 @@ builder.Services.AddCors();
 builder.Services.AddMediatR(x =>
     x.RegisterServicesFromAssemblyContaining<GetCampsiteList.Handler>()
 );
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 var app = builder.Build();
 

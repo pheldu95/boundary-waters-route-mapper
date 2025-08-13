@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using Domain;
 using MediatR;
 using Persistence;
@@ -12,7 +13,7 @@ public class EditCampsite
         public required Campsite Campsite { get; set; }
     }
 
-    public class Handler(AppDbContext context) : IRequestHandler<Command>
+    public class Handler(AppDbContext context, IMapper mapper) : IRequestHandler<Command>
     {
         public async Task Handle(Command request, CancellationToken cancellationToken)
         {
@@ -20,7 +21,7 @@ public class EditCampsite
                 .FindAsync([request.Campsite.Id], cancellationToken)
                     ?? throw new Exception("Cannot find campsite"); //if returns null, then throw exception
 
-            campsite.Name = request.Campsite.Name;
+            mapper.Map(request.Campsite, campsite);
 
             await context.SaveChangesAsync(cancellationToken);
         }
