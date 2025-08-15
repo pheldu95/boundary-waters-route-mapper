@@ -30,7 +30,15 @@ public class CampsitesController() : BaseApiController
     public async Task<ActionResult> EditCampsite(Campsite campsite)
     {
         await Mediator.Send(new EditCampsite.Command { Campsite = campsite });
-        
+
         return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteCampsite(string id)
+    {
+        await Mediator.Send(new DeleteCampsite.Command { Id = id });
+
+        return Ok();
     }
 }
