@@ -1,6 +1,7 @@
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { CssBaseline, List, ListItem, ListItemText, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import NavBar from "./NavBar";
 
 function App() {
   const [campsites, setCampsites] = useState<Campsite[]>([]);
@@ -12,7 +13,8 @@ function App() {
 
   return (
     <>
-      <Typography variant='h3'>Route Mapper</Typography>
+      <CssBaseline />
+      <NavBar />
       <List>
         {campsites.map((campsite) => (
           <ListItem key={campsite.id}>
