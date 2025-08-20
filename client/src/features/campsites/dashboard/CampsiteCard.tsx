@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, Chip, Link, Typography } from "@mui/material"
+import { Button, Card, CardActions, CardContent, Chip, Typography } from "@mui/material"
 
 type Props = {
     campsite: Campsite
