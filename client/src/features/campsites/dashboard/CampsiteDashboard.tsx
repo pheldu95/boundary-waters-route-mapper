@@ -4,16 +4,31 @@ import CampsiteDetails from "../details/CampsiteDetail";
 
 type Props = {
     campsites: Campsite[]
+    selectCampsite: (id: string) => void;
+    cancelSelectCampsite: () => void;
+    selectedCampsite: Campsite | undefined
 }
 
-export default function CampsiteDashboard({campsites}: Props) {
+export default function CampsiteDashboard({
+    campsites,
+    cancelSelectCampsite,
+    selectCampsite,
+    selectedCampsite
+}: Props) {
     return (
         <Grid2 container spacing={3}>
             <Grid2 size={7}>
-                <CampsiteList campsites={campsites}/>
+                <CampsiteList
+                    campsites={campsites}
+                    selectCampsite={selectCampsite}
+                />
             </Grid2>
             <Grid2 size={5}>
-                {campsites[0] && <CampsiteDetails campsite={campsites[0]} />}
+                {selectedCampsite && <CampsiteDetails
+                    campsite={selectedCampsite}
+                    cancelSelectCampsite={cancelSelectCampsite}
+                />
+                }
             </Grid2>
         </Grid2>
     )

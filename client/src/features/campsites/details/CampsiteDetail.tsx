@@ -2,9 +2,10 @@ import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@
 
 type Props = {
   campsite: Campsite
+  cancelSelectCampsite: () => void
 }
 
-export default function CampsiteDetails({ campsite }: Props) {
+export default function CampsiteDetails({ campsite, cancelSelectCampsite }: Props) {
   return (
     <Card sx={{ borderRadius: 3 }}>
       <CardMedia
@@ -18,7 +19,7 @@ export default function CampsiteDetails({ campsite }: Props) {
       </CardContent>
       <CardActions>
         <Button color="primary">Edit</Button>
-        <Button color="inherit">Cancel</Button>
+        <Button onClick={cancelSelectCampsite} color="inherit">Cancel</Button>
       </CardActions>
     </Card>
   )

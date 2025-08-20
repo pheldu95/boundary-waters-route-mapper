@@ -6,6 +6,7 @@ import CampsiteDashboard from "../../features/campsites/dashboard/CampsiteDashbo
 
 function App() {
   const [campsites, setCampsites] = useState<Campsite[]>([]);
+  const [selectedCampsite, setSelectedCampsite] = useState<Campsite | undefined>(undefined)
 
   useEffect(() => {
     axios.get<Campsite[]>('https://localhost:5001/api/campsites')
@@ -14,12 +15,25 @@ function App() {
     return () => { } //can optionally return a cleanup function here
   }, [])
 
+  const handleSelectCampsite = (id: string) => {
+    setSelectedCampsite(campsites.find(x => x.id === id));
+  }
+
+  const handleCancelSelectCampsite = () => {
+    setSelectedCampsite(undefined);
+  }
+
   return (
     <Box sx={{bgcolor: "#eeeeee"}}>
       <CssBaseline />
       <NavBar />
       <Container maxWidth='xl' sx={{mt: 3}}>
-        <CampsiteDashboard campsites={campsites} />
+        <CampsiteDashboard 
+          campsites={campsites} 
+          selectCampsite={handleSelectCampsite}
+          cancelSelectCampsite={handleCancelSelectCampsite}
+          selectedCampsite={selectedCampsite}
+        />
       </Container>
     </Box>
   )

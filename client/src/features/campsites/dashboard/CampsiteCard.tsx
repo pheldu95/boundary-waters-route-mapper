@@ -2,9 +2,10 @@ import { Button, Card, CardActions, CardContent, Chip, Typography } from "@mui/m
 
 type Props = {
     campsite: Campsite
+    selectCampsite: (id: string) => void;
 }
 
-export default function CampsiteCard({ campsite }: Props) {
+export default function CampsiteCard({ campsite, selectCampsite }: Props) {
     return (
         <Card sx={{ borderRadius: 3 }}>
             <CardContent>
@@ -15,7 +16,7 @@ export default function CampsiteCard({ campsite }: Props) {
             </CardContent>
             <CardActions sx={{display: 'flex', justifyContent: 'space-between', pb: 2}}>
                 <Chip label={campsite.name} variant="outlined" />
-                <Button size="medium" variant="contained">View</Button>
+                <Button onClick={() => selectCampsite(campsite.id)} size="medium" variant="contained">View</Button>
             </CardActions>
         </Card>
     )
