@@ -1,6 +1,6 @@
 import { Grid2 } from "@mui/material";
 import CampsiteList from "./CampsiteList";
-import CampsiteDetails from "../details/CampsiteDetails";
+import CampsiteDetails from "../details/CampsiteDetail";
 
 type Props = {
     campsites: Campsite[]
