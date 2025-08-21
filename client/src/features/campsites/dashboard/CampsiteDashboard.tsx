@@ -1,6 +1,7 @@
 import { Grid2 } from "@mui/material";
 import CampsiteList from "./CampsiteList";
 import CampsiteDetails from "../details/CampsiteDetail";
+import CampsiteForm from "../form/CampsiteForm";
 
 type Props = {
     campsites: Campsite[]
@@ -24,11 +25,13 @@ export default function CampsiteDashboard({
                 />
             </Grid2>
             <Grid2 size={5}>
-                {selectedCampsite && <CampsiteDetails
-                    campsite={selectedCampsite}
-                    cancelSelectCampsite={cancelSelectCampsite}
-                />
+                {selectedCampsite &&
+                    <CampsiteDetails
+                        campsite={selectedCampsite}
+                        cancelSelectCampsite={cancelSelectCampsite}
+                    />
                 }
+                <CampsiteForm />
             </Grid2>
         </Grid2>
     )
