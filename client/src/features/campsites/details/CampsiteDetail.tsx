@@ -3,9 +3,10 @@ import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@
 type Props = {
   campsite: Campsite
   cancelSelectCampsite: () => void
+  openForm: (id: string) => void
 }
 
-export default function CampsiteDetails({ campsite, cancelSelectCampsite }: Props) {
+export default function CampsiteDetails({ campsite, cancelSelectCampsite, openForm }: Props) {
   return (
     <Card sx={{ borderRadius: 3 }}>
       <CardMedia
@@ -18,7 +19,7 @@ export default function CampsiteDetails({ campsite, cancelSelectCampsite }: Prop
         <Typography variant="body1">{campsite.description}</Typography>
       </CardContent>
       <CardActions>
-        <Button color="primary">Edit</Button>
+        <Button onClick={() => openForm(campsite.id)}color="primary">Edit</Button>
         <Button onClick={cancelSelectCampsite} color="inherit">Cancel</Button>
       </CardActions>
     </Card>
