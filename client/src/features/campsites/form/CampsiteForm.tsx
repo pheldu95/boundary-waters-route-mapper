@@ -2,11 +2,12 @@ import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import type { FormEvent } from "react";
 
 type Props ={
-  campsite?: Campsite
-  closeForm: () => void
+  campsite?: Campsite;
+  closeForm: () => void;
+  submitForm: (campsite: Campsite) => void;
 }
 
-export default function CampsiteForm({campsite, closeForm}: Props) {
+export default function CampsiteForm({campsite, closeForm, submitForm}: Props) {
   
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); //prevents browser reload on submit
@@ -17,9 +18,11 @@ export default function CampsiteForm({campsite, closeForm}: Props) {
     const data: {[key: string]: FormDataEntryValue} = {}
     formData.forEach((value, key) => {
       data[key] = value;
-    })
+    });
 
-    console.log(data);
+    if (campsite) data.id = campsite.id;
+
+    submitForm(data as unknown as Campsite);
   }
   
   return (
@@ -28,11 +31,11 @@ export default function CampsiteForm({campsite, closeForm}: Props) {
             Add Campsite
         </Typography>
         <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column' gap={3}>
-            <TextField name='name' label='Name' value={campsite?.name}/>
-            <TextField name='latitude' label='Latitude' value={campsite?.latitude}/>
-            <TextField name='longitude' label='Longitude' value={campsite?.longitude}/>
-            <TextField name='description' label='Description' value={campsite?.description} multiline rows={3}/>
-            <TextField name='url' label='Url' value={campsite?.url}/>
+            <TextField name='name' label='Name' defaultValue={campsite?.name}/>
+            <TextField name='latitude' label='Latitude' defaultValue={campsite?.latitude}/>
+            <TextField name='longitude' label='Longitude' defaultValue={campsite?.longitude}/>
+            <TextField name='description' label='Description' defaultValue={campsite?.description} multiline rows={3}/>
+            <TextField name='url' label='Url' defaultValue={campsite?.url}/>
             <Box display='flex' justifyContent='end' gap={3}>
                 <Button onClick={closeForm} color='inherit'>Cancel</Button>
                 <Button type="submit" color='success' variant="contained">Submit</Button>
