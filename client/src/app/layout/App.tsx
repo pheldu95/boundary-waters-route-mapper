@@ -46,6 +46,10 @@ function App() {
     setEditMode(false);
   }
 
+  const handleDelete = (id: string) => {
+    setCampsites(campsites.filter(x => x.id !== id));
+  }
+
   return (
     <Box sx={{bgcolor: "#eeeeee"}}>
       <CssBaseline />
@@ -60,6 +64,7 @@ function App() {
           openForm={handleOpenForm}
           closeForm={handleFormClose}
           submitForm={handleSubmitForm}
+          deleteCampsite={handleDelete}
         />
       </Container>
     </Box>

@@ -1,11 +1,12 @@
-import { Button, Card, CardActions, CardContent, Chip, Typography } from "@mui/material"
+import { Box, Button, Card, CardActions, CardContent, Chip, Typography } from "@mui/material"
 
 type Props = {
     campsite: Campsite
     selectCampsite: (id: string) => void;
+    deleteCampsite: (id: string) => void;
 }
 
-export default function CampsiteCard({ campsite, selectCampsite }: Props) {
+export default function CampsiteCard({ campsite, selectCampsite, deleteCampsite }: Props) {
     return (
         <Card sx={{ borderRadius: 3 }}>
             <CardContent>
@@ -14,9 +15,21 @@ export default function CampsiteCard({ campsite, selectCampsite }: Props) {
                 <Typography sx={{ color: 'text.secondary', mb: 1 }}>{campsite.longitude}</Typography>
                 <Typography variant="body2">{campsite.description}</Typography>
             </CardContent>
-            <CardActions sx={{display: 'flex', justifyContent: 'space-between', pb: 2}}>
+            <CardActions sx={{ display: 'flex', justifyContent: 'space-between', pb: 2 }}>
                 <Chip label={campsite.name} variant="outlined" />
-                <Button onClick={() => selectCampsite(campsite.id)} size="medium" variant="contained">View</Button>
+                <Box display='flex' gap={3}>
+                    <Button
+                        onClick={() => selectCampsite(campsite.id)} size="medium" variant="contained"
+                    >
+                        View
+                    </Button>
+                    <Button
+                        onClick={() => deleteCampsite(campsite.id)} size="medium" variant="contained"
+                        color="error"
+                    >
+                        Delete
+                    </Button>
+                </Box>
             </CardActions>
         </Card>
     )
