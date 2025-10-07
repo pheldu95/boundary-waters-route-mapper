@@ -1,21 +1,13 @@
 import { Box, Container, CssBaseline, Typography } from "@mui/material";
-import axios from "axios";
 import { useState } from "react";
 import NavBar from "./NavBar";
 import CampsiteDashboard from "../../features/campsites/dashboard/CampsiteDashboard";
-import { useQuery } from "@tanstack/react-query";
+import { useCampsites } from "../../lib/hooks/useCampsites";
 
 function App() {
   const [selectedCampsite, setSelectedCampsite] = useState<Campsite | undefined>(undefined)
   const [editMode, setEditMode] = useState(false);
-
-  const { data: campsites, isPending } = useQuery({
-    queryKey: ['campsites'],
-    queryFn: async () => {
-      const response = await axios.get<Campsite[]>('https://localhost:5001/api/campsites');
-      return response.data;
-    }
-  })
+  const {campsites, isPending} = useCampsites();
 
   const handleSelectCampsite = (id: string) => {
     setSelectedCampsite(campsites!.find(x => x.id === id));
