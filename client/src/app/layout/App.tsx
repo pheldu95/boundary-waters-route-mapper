@@ -1,23 +1,24 @@
-import { Box, Container, CssBaseline } from "@mui/material";
+import { Box, Container, CssBaseline, Typography } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import NavBar from "./NavBar";
 import CampsiteDashboard from "../../features/campsites/dashboard/CampsiteDashboard";
+import { useQuery } from "@tanstack/react-query";
 
 function App() {
-  const [campsites, setCampsites] = useState<Campsite[]>([]);
   const [selectedCampsite, setSelectedCampsite] = useState<Campsite | undefined>(undefined)
   const [editMode, setEditMode] = useState(false);
 
-  useEffect(() => {
-    axios.get<Campsite[]>('https://localhost:5001/api/campsites')
-      .then(response => setCampsites(response.data));
-
-    return () => { } //can optionally return a cleanup function here
-  }, [])
+  const { data: campsites, isPending } = useQuery({
+    queryKey: ['campsites'],
+    queryFn: async () => {
+      const response = await axios.get<Campsite[]>('https://localhost:5001/api/campsites');
+      return response.data;
+    }
+  })
 
   const handleSelectCampsite = (id: string) => {
-    setSelectedCampsite(campsites.find(x => x.id === id));
+    setSelectedCampsite(campsites!.find(x => x.id === id));
   }
 
   const handleCancelSelectCampsite = () => {
@@ -36,36 +37,42 @@ function App() {
   }
 
   const handleSubmitForm = (campsite: Campsite) => {
-    if (campsite.id) {
-      setCampsites(campsites.map(x => x.id === campsite.id ? campsite : x))
-    } else {
-      const newCampsite = {...campsite, id: campsite.latitude.toString()}
-      setSelectedCampsite(newCampsite);
-      setCampsites([...campsites, newCampsite]);
-    }
+    // if (campsite.id) {
+    //   setCampsites(campsites.map(x => x.id === campsite.id ? campsite : x))
+    // } else {
+    //   const newCampsite = {...campsite, id: campsite.latitude.toString()}
+    //   setSelectedCampsite(newCampsite);
+    //   setCampsites([...campsites, newCampsite]);
+    // }
+    console.log(campsite);
+
     setEditMode(false);
   }
 
   const handleDelete = (id: string) => {
-    setCampsites(campsites.filter(x => x.id !== id));
+    console.log(id);
   }
 
   return (
-    <Box sx={{bgcolor: "#eeeeee"}}>
+    <Box sx={{ bgcolor: "#eeeeee" }}>
       <CssBaseline />
       <NavBar openForm={handleOpenForm} />
-      <Container maxWidth='xl' sx={{mt: 3}}>
-        <CampsiteDashboard 
-          campsites={campsites} 
-          selectCampsite={handleSelectCampsite}
-          cancelSelectCampsite={handleCancelSelectCampsite}
-          selectedCampsite={selectedCampsite}
-          editMode={editMode}
-          openForm={handleOpenForm}
-          closeForm={handleFormClose}
-          submitForm={handleSubmitForm}
-          deleteCampsite={handleDelete}
-        />
+      <Container maxWidth='xl' sx={{ mt: 3 }}>
+        {!campsites || isPending ? (
+          <Typography>Loading...</Typography>
+        ) : (
+          <CampsiteDashboard
+            campsites={campsites}
+            selectCampsite={handleSelectCampsite}
+            cancelSelectCampsite={handleCancelSelectCampsite}
+            selectedCampsite={selectedCampsite}
+            editMode={editMode}
+            openForm={handleOpenForm}
+            closeForm={handleFormClose}
+            submitForm={handleSubmitForm}
+            deleteCampsite={handleDelete}
+          />
+        )}
       </Container>
     </Box>
   )
