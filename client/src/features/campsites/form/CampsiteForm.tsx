@@ -1,15 +1,16 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import type { FormEvent } from "react";
+import { useCampsites } from "../../../lib/hooks/useCampsites";
 
 type Props ={
   campsite?: Campsite;
   closeForm: () => void;
-  submitForm: (campsite: Campsite) => void;
 }
 
-export default function CampsiteForm({campsite, closeForm, submitForm}: Props) {
-  
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+export default function CampsiteForm({campsite, closeForm}: Props) {
+  const {updateCampsite} = useCampsites();
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); //prevents browser reload on submit
     
     const formData =  new FormData(event.currentTarget);
@@ -20,9 +21,11 @@ export default function CampsiteForm({campsite, closeForm, submitForm}: Props) {
       data[key] = value;
     });
 
-    if (campsite) data.id = campsite.id;
-
-    submitForm(data as unknown as Campsite);
+    if (campsite) {
+      data.id = campsite.id;
+      await updateCampsite.mutateAsync(data as unknown as Campsite);
+      closeForm();
+    }
   }
   
   return (
@@ -38,7 +41,12 @@ export default function CampsiteForm({campsite, closeForm, submitForm}: Props) {
             <TextField name='url' label='Url' defaultValue={campsite?.url}/>
             <Box display='flex' justifyContent='end' gap={3}>
                 <Button onClick={closeForm} color='inherit'>Cancel</Button>
-                <Button type="submit" color='success' variant="contained">Submit</Button>
+                <Button 
+                  type="submit" 
+                  color='success' 
+                  variant="contained"
+                  disabled={updateCampsite.isPending} //disable after clicking submit
+                >Submit</Button>
             </Box>
         </Box>
     </Paper>
