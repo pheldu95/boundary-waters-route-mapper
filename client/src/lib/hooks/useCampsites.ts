@@ -25,9 +25,21 @@ export const useCampsites = () => {
         }
     })
 
+    const createCampsite = useMutation({
+        mutationFn: async (campsite: Campsite) => {
+            await agent.post('/campsites', campsite)
+        },
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: ['campsites']
+            })
+        }
+    })
+
     return {
         campsites,
         isPending,
-        updateCampsite
+        updateCampsite,
+        createCampsite
     }
 }

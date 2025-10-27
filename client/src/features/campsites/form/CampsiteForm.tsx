@@ -8,7 +8,7 @@ type Props ={
 }
 
 export default function CampsiteForm({campsite, closeForm}: Props) {
-  const {updateCampsite} = useCampsites();
+  const {updateCampsite, createCampsite} = useCampsites();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); //prevents browser reload on submit
@@ -24,6 +24,9 @@ export default function CampsiteForm({campsite, closeForm}: Props) {
     if (campsite) {
       data.id = campsite.id;
       await updateCampsite.mutateAsync(data as unknown as Campsite);
+      closeForm();
+    } else { //create a campsite if it doesn't exist yet
+      await createCampsite.mutateAsync(data as unknown as Campsite);
       closeForm();
     }
   }
@@ -45,7 +48,7 @@ export default function CampsiteForm({campsite, closeForm}: Props) {
                   type="submit" 
                   color='success' 
                   variant="contained"
-                  disabled={updateCampsite.isPending} //disable after clicking submit
+                  disabled={updateCampsite.isPending || createCampsite.isPending} //disable after clicking submit
                 >Submit</Button>
             </Box>
         </Box>
