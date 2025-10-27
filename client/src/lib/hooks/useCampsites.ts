@@ -23,7 +23,7 @@ export const useCampsites = () => {
                 queryKey: ['campsites']
             })
         }
-    })
+    });
 
     const createCampsite = useMutation({
         mutationFn: async (campsite: Campsite) => {
@@ -34,12 +34,24 @@ export const useCampsites = () => {
                 queryKey: ['campsites']
             })
         }
-    })
+    });
+
+    const deleteCampsite = useMutation({
+        mutationFn: async (id: string) => {
+            await agent.delete(`/campsites/${id}`)
+        },
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: ['campsites']
+            })
+        }
+    });
 
     return {
         campsites,
         isPending,
         updateCampsite,
-        createCampsite
+        createCampsite,
+        deleteCampsite
     }
 }

@@ -11,7 +11,6 @@ type Props = {
     openForm: (id: string) => void;
     closeForm: () => void;
     editMode: boolean;
-    deleteCampsite: (id: string) => void;
 }
 
 export default function CampsiteDashboard({
@@ -21,8 +20,7 @@ export default function CampsiteDashboard({
     selectedCampsite,
     openForm,
     closeForm,
-    editMode,
-    deleteCampsite
+    editMode
 }: Props) {
     return (
         <Grid2 container spacing={3}>
@@ -30,7 +28,6 @@ export default function CampsiteDashboard({
                 <CampsiteList
                     campsites={campsites}
                     selectCampsite={selectCampsite}
-                    deleteCampsite={deleteCampsite}
                 />
             </Grid2>
             <Grid2 size={5}>

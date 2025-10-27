@@ -1,12 +1,14 @@
 import { Box, Button, Card, CardActions, CardContent, Chip, Typography } from "@mui/material"
+import { useCampsites } from "../../../lib/hooks/useCampsites";
 
 type Props = {
     campsite: Campsite
     selectCampsite: (id: string) => void;
-    deleteCampsite: (id: string) => void;
 }
 
-export default function CampsiteCard({ campsite, selectCampsite, deleteCampsite }: Props) {
+export default function CampsiteCard({ campsite, selectCampsite }: Props) {
+    const{deleteCampsite} = useCampsites();
+
     return (
         <Card sx={{ borderRadius: 3 }}>
             <CardContent>
@@ -24,7 +26,10 @@ export default function CampsiteCard({ campsite, selectCampsite, deleteCampsite 
                         View
                     </Button>
                     <Button
-                        onClick={() => deleteCampsite(campsite.id)} size="medium" variant="contained"
+                        onClick={() => deleteCampsite.mutate(campsite.id)} 
+                        disabled={deleteCampsite.isPending}
+                        size="medium" 
+                        variant="contained"
                         color="error"
                     >
                         Delete
