@@ -36,7 +36,7 @@ export default function CampsiteDashboard({
             <Grid2 size={5}>
                 {selectedCampsite && !editMode && //if we have a selected campsite and we are not in edit mode
                     <CampsiteDetail
-                        campsite={selectedCampsite}
+                        selectedCampsite={selectedCampsite}
                         cancelSelectCampsite={cancelSelectCampsite}
                         openForm={openForm}
                     />

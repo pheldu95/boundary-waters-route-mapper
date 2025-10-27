@@ -1,12 +1,18 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material"
+import { useCampsites } from "../../../lib/hooks/useCampsites"
 
 type Props = {
-  campsite: Campsite
+  selectedCampsite: Campsite
   cancelSelectCampsite: () => void
   openForm: (id: string) => void
 }
 
-export default function CampsiteDetails({ campsite, cancelSelectCampsite, openForm }: Props) {
+export default function CampsiteDetails({ selectedCampsite, cancelSelectCampsite, openForm }: Props) {
+  const {campsites} = useCampsites(); //temporary fix for selected campsite not updating after you edit it
+  const campsite = campsites?.find(x => x.id === selectedCampsite.id);
+
+  if(!campsite) return <Typography>Loading...</Typography>
+
   return (
     <Card sx={{ borderRadius: 3 }}>
       <CardMedia
