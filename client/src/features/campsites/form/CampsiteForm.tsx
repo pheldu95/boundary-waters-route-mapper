@@ -1,10 +1,12 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import type { FormEvent } from "react";
 import { useCampsites } from "../../../lib/hooks/useCampsites";
+import { useNavigate, useParams } from "react-router";
 
 export default function CampsiteForm() {
-  const {updateCampsite, createCampsite} = useCampsites();
-  const campsite = {} as Campsite;
+  const {id} = useParams();
+  const {updateCampsite, createCampsite, campsite, isLoadingCampsite} = useCampsites(id);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); //prevents browser reload on submit
@@ -20,10 +22,13 @@ export default function CampsiteForm() {
     if (campsite) {
       data.id = campsite.id;
       await updateCampsite.mutateAsync(data as unknown as Campsite);
+      navigate(`/campsites/${campsite.id}`)
     } else { //create a campsite if it doesn't exist yet
       await createCampsite.mutateAsync(data as unknown as Campsite);
     }
   }
+  
+  if(isLoadingCampsite) return <Typography>Loading...</Typography>
   
   return (
     <Paper sx={{borderRadius: 3, padding: 3}}>

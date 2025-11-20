@@ -23,7 +23,7 @@ export default function CampsiteDetails() {
         <Typography variant="body1">{campsite.description}</Typography>
       </CardContent>
       <CardActions>
-        <Button component={Link} to={`/campsites/${campsite.id}`} color="primary">Edit</Button>
+        <Button component={Link} to={`/manage/${campsite.id}`} color="primary">Edit</Button>
         <Button onClick={() => navigate('/campsites')} color="inherit">Cancel</Button>
       </CardActions>
     </Card>
