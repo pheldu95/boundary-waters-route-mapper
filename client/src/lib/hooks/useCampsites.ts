@@ -37,7 +37,8 @@ export const useCampsites = (id?: string) => {
 
     const createCampsite = useMutation({
         mutationFn: async (campsite: Campsite) => {
-            await agent.post('/campsites', campsite)
+            const response = await agent.post('/campsites', campsite)
+            return response.data; //should be the id of the created campsite
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({

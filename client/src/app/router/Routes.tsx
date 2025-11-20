@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
             { path: '', element: <HomePage /> },
             { path: 'campsites', element: <CampsiteDashboard /> },
             { path: 'campsites/:id', element: <CampsiteDetails /> },
-            { path: 'createCampsite', element: <CampsiteForm /> },
+            { path: 'createCampsite', element: <CampsiteForm key='create' /> },
             { path: 'manage/:id', element: <CampsiteForm /> },
         ]
     }

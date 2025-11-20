@@ -24,16 +24,20 @@ export default function CampsiteForm() {
       await updateCampsite.mutateAsync(data as unknown as Campsite);
       navigate(`/campsites/${campsite.id}`)
     } else { //create a campsite if it doesn't exist yet
-      await createCampsite.mutateAsync(data as unknown as Campsite);
+      createCampsite.mutate(data as unknown as Campsite, {
+        onSuccess: (id) => {
+          navigate(`/campsites/${id}`)
+        }
+      });
     }
   }
   
   if(isLoadingCampsite) return <Typography>Loading...</Typography>
-  
+
   return (
     <Paper sx={{borderRadius: 3, padding: 3}}>
         <Typography variant="h5" gutterBottom color="primary">
-            Add Campsite
+            {campsite? 'Edit Campsite' : 'Add Campsite'}
         </Typography>
         <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column' gap={3}>
             <TextField name='name' label='Name' defaultValue={campsite?.name}/>
