@@ -1,19 +1,18 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CampsiteCard from "./CampsiteCard";
+import { useCampsites } from "../../../lib/hooks/useCampsites";
 
-type Props = {
-  campsites: Campsite[]
-  selectCampsite: (id: string) => void;
-}
-
-export default function CampsiteList({ campsites, selectCampsite }: Props) {
+export default function CampsiteList() {
+  const {campsites, isPending} = useCampsites();
+    
+  if(!campsites || isPending) return <Typography>Loading...</Typography>
+    
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       {campsites.map(campsite => (
         <CampsiteCard
           key={campsite.id}
           campsite={campsite}
-          selectCampsite={selectCampsite}
         />
       ))}
     </Box>

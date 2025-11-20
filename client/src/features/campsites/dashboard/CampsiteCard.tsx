@@ -3,10 +3,9 @@ import { useCampsites } from "../../../lib/hooks/useCampsites";
 
 type Props = {
     campsite: Campsite
-    selectCampsite: (id: string) => void;
 }
 
-export default function CampsiteCard({ campsite, selectCampsite }: Props) {
+export default function CampsiteCard({ campsite }: Props) {
     const{deleteCampsite} = useCampsites();
 
     return (
@@ -21,7 +20,9 @@ export default function CampsiteCard({ campsite, selectCampsite }: Props) {
                 <Chip label={campsite.name} variant="outlined" />
                 <Box display='flex' gap={3}>
                     <Button
-                        onClick={() => selectCampsite(campsite.id)} size="medium" variant="contained"
+                        onClick={() => {}} 
+                        size="medium" 
+                        variant="contained"
                     >
                         View
                     </Button>

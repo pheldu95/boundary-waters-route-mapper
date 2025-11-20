@@ -2,13 +2,9 @@ import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import type { FormEvent } from "react";
 import { useCampsites } from "../../../lib/hooks/useCampsites";
 
-type Props ={
-  campsite?: Campsite;
-  closeForm: () => void;
-}
-
-export default function CampsiteForm({campsite, closeForm}: Props) {
+export default function CampsiteForm() {
   const {updateCampsite, createCampsite} = useCampsites();
+  const campsite = {} as Campsite;
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); //prevents browser reload on submit
@@ -24,10 +20,8 @@ export default function CampsiteForm({campsite, closeForm}: Props) {
     if (campsite) {
       data.id = campsite.id;
       await updateCampsite.mutateAsync(data as unknown as Campsite);
-      closeForm();
     } else { //create a campsite if it doesn't exist yet
       await createCampsite.mutateAsync(data as unknown as Campsite);
-      closeForm();
     }
   }
   
@@ -43,7 +37,7 @@ export default function CampsiteForm({campsite, closeForm}: Props) {
             <TextField name='description' label='Description' defaultValue={campsite?.description} multiline rows={3}/>
             <TextField name='url' label='Url' defaultValue={campsite?.url}/>
             <Box display='flex' justifyContent='end' gap={3}>
-                <Button onClick={closeForm} color='inherit'>Cancel</Button>
+                <Button color='inherit'>Cancel</Button>
                 <Button 
                   type="submit" 
                   color='success' 
