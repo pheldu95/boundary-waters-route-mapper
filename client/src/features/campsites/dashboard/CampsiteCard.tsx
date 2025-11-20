@@ -1,5 +1,6 @@
 import { Box, Button, Card, CardActions, CardContent, Chip, Typography } from "@mui/material"
 import { useCampsites } from "../../../lib/hooks/useCampsites";
+import { Link } from "react-router";
 
 type Props = {
     campsite: Campsite
@@ -20,7 +21,8 @@ export default function CampsiteCard({ campsite }: Props) {
                 <Chip label={campsite.name} variant="outlined" />
                 <Box display='flex' gap={3}>
                     <Button
-                        onClick={() => {}} 
+                        component={Link}
+                        to={`/campsites/${campsite.id}`}
                         size="medium" 
                         variant="contained"
                     >

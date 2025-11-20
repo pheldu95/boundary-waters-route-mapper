@@ -1,15 +1,9 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material"
-import { useCampsites } from "../../../lib/hooks/useCampsites"
+import { Link, useNavigate } from "react-router";
 
-type Props = {
-  selectedCampsite: Campsite
-  cancelSelectCampsite: () => void
-  openForm: (id: string) => void
-}
-
-export default function CampsiteDetails({ selectedCampsite, cancelSelectCampsite, openForm }: Props) {
-  const {campsites} = useCampsites(); //temporary fix for selected campsite not updating after you edit it
-  const campsite = campsites?.find(x => x.id === selectedCampsite.id);
+export default function CampsiteDetails() {
+  const navigate = useNavigate();
+  const campsite = {} as Campsite;
 
   if(!campsite) return <Typography>Loading...</Typography>
 
@@ -25,8 +19,8 @@ export default function CampsiteDetails({ selectedCampsite, cancelSelectCampsite
         <Typography variant="body1">{campsite.description}</Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={() => openForm(campsite.id)}color="primary">Edit</Button>
-        <Button onClick={cancelSelectCampsite} color="inherit">Cancel</Button>
+        <Button component={Link} to={`/campsites/${campsite.id}`} onClick={() => openForm(campsite.id)}color="primary">Edit</Button>
+        <Button onClick={() => navigate('/campsites')} color="inherit">Cancel</Button>
       </CardActions>
     </Card>
   )
